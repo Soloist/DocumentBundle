@@ -22,6 +22,9 @@ class SoloistDocumentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // Add configuration to container
+        $container->setParameter('soloist_document_upload_dir', $config['upload_dir']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
