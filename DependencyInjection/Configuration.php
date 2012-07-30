@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('upload_folder')->defaultValue('/files/soloist_document')->end()
+                ->scalarNode('upload_dir')->defaultValue('/files/soloist_document')->end()
             ->end()
         ;
 
