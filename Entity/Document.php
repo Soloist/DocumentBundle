@@ -106,6 +106,25 @@ class Document implements CrudableInterface
     }
 
     /**
+     * Get the filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set the filename
+     * @param $filename
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
      * Set created date
      * @param \DateTime $date
      */

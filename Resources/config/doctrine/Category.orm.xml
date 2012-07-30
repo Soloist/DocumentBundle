@@ -8,7 +8,7 @@
             <generator strategy="AUTO" />
         </id>
         <field name="name" type="string" column="name" length="255" />
-        <field name="description" type="text" column="description" />
+        <field name="description" type="text" column="description" nullable="true" />
         <one-to-many field="documents" target-entity="Soloist\Bundle\DocumentBundle\Entity\Document" mapped-by="category" />
         <lifecycle-callbacks/>
     </entity>

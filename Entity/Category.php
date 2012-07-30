@@ -110,6 +110,15 @@ class Category implements CrudableInterface
     }
 
     /**
+     * Return the category as string
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
      * Crudable
      * @return array
      */
