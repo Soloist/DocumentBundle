@@ -3,11 +3,12 @@
 namespace Soloist\Bundle\DocumentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FrequenceWeb\Bundle\DashboardBundle\Crud\CrudableInterface;
 
 /**
  * Soloist\Bundle\DocumentBundle\Entity\Document
  */
-class Document
+class Document implements CrudableInterface
 {
     /**
      * @var integer $id
@@ -156,5 +157,16 @@ class Document
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Crudable
+     * @return array
+     */
+    public function getRouteParams()
+    {
+        return array(
+            'id' => $this->id
+        );
     }
 }
