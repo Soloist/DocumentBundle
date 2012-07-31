@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <import resource="routing/admin/document.xml" prefix="/" />
-    <import resource="routing/admin/category.xml" prefix="/" />
-    <import resource="routing/default.xml" prefix="/" />
+    <import resource="@SoloistDocumentBundle/Resources/config/routing/admin/document.xml" />
+    <import resource="@SoloistDocumentBundle/Resources/config/routing/admin/category.xml" />
+    <import resource="@SoloistDocumentBundle/Resources/config/routing/default.xml" />
 </routes>

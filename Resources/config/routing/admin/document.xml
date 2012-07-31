@@ -19,17 +19,17 @@
         <requirement key="_method">POST</requirement>
     </route>
 
-    <route id="soloist_document_admin_document_edit" pattern="/admin/soloist/document/document/edit">
+    <route id="soloist_document_admin_document_edit" pattern="/admin/soloist/document/document/edit/{id}">
         <default key="_controller">SoloistDocumentBundle:AdminDocument:edit</default>
         <requirement key="_method">GET</requirement>
     </route>
 
-    <route id="soloist_document_admin_document_update" pattern="/admin/soloist/document/document/update">
+    <route id="soloist_document_admin_document_update" pattern="/admin/soloist/document/document/update/{id}">
         <default key="_controller">SoloistDocumentBundle:AdminDocument:update</default>
         <requirement key="_method">POST</requirement>
     </route>
 
-    <route id="soloist_document_admin_document_delete" pattern="/admin/soloist/document/document/delete">
+    <route id="soloist_document_admin_document_delete" pattern="/admin/soloist/document/document/delete/{id}">
         <default key="_controller">SoloistDocumentBundle:AdminDocument:delete</default>
         <requirement key="_method">GET</requirement>
     </route>
