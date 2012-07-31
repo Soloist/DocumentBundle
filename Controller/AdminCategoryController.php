@@ -28,6 +28,12 @@ class AdminCategoryController extends ORMCrudController
             'plural'       => 'catégories',
             'form_type'      => new CategoryType,
             'class'          => new Category,
+            'object_actions' => array(
+                'manage_image' => array(
+                    'label' => 'Documents',
+                    'route' => 'soloist_blog_admin_document',
+                )
+            ),
             'repository'     => 'SoloistDocumentBundle:Category',
         );
     }

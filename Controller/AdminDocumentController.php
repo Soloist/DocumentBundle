@@ -8,6 +8,8 @@ use Soloist\Bundle\DocumentBundle\Form\Handler\DocumentHandler,
     Soloist\Bundle\DocumentBundle\Entity\Document,
     Soloist\Bundle\DocumentBundle\Form\Type\DocumentType;
 
+use Soloist\Bundle\DocumentBundle\Entity\Category;
+
 class AdminDocumentController extends ORMCrudController
 {
     /**
@@ -54,5 +56,15 @@ class AdminDocumentController extends ORMCrudController
             $this->get('form.factory'),
             $this->container->getParameter('kernel.root_dir') . '/..' . $this->container->getParameter('soloist_document_upload_dir')
         );
+    }
+
+    public function listByCategoryAction(Category $category)
+    {
+        $documents = $category->getDocuments();
+
+        return $this->render('FrequenceWebDashboardBundle:Crud:index.html.twig', array(
+            'objects'       => $documents,
+            'currentSort'   => null
+        ));
     }
 }
