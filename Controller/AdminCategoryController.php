@@ -31,7 +31,7 @@ class AdminCategoryController extends ORMCrudController
             'object_actions' => array(
                 'manage_documents' => array(
                     'label' => 'Documents',
-                    'route' => 'soloist_blog_admin_document',
+                    'route' => 'soloist_document_admin_category_document',
                 )
             ),
             'repository'     => 'SoloistDocumentBundle:Category',

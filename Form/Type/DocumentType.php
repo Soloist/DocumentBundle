@@ -16,7 +16,6 @@ class DocumentType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('category')
-            ->add('filename', 'file')
         ;
     }
 

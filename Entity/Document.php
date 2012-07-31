@@ -26,11 +26,6 @@ class Document implements CrudableInterface
     protected $description;
 
     /**
-     * @var string
-     */
-    protected $filename;
-
-    /**
      * Creation date
      * @var DateTime
      */
@@ -48,6 +43,10 @@ class Document implements CrudableInterface
      */
     protected $category;
 
+    /**
+     * @var ArrayCollection
+     */
+    protected $files;
 
     /**
      * Get id
@@ -106,20 +105,21 @@ class Document implements CrudableInterface
     }
 
     /**
-     * Get the filename
+     * Get files
      */
-    public function getFilename()
+    public function getFiles()
     {
-        return $this->filename;
+        return $this->files;
     }
 
     /**
      * Set the filename
      * @param $filename
      */
-    public function setFilename($filename)
+    public function addFile($file)
     {
-        $this->filename = $filename;
+        $this->files->add($file);
+        $file->setDocument($this);
 
         return $this;
     }

@@ -1,0 +1,58 @@
+{% extends 'FrequenceWebDashboardBundle::admin.html.twig' %}
+
+{% block body %}
+<h1>Document "{{ document.title }}"</h1>
+<div class="row-fluid">
+    <div class="span8">
+        <div class="well">
+            {{ document.description | raw }}
+        </div>
+        {% if document.files is empty %}
+            <p>Il n'y a actuellement aucun fichier dans ce document.</p>
+        {% else %}
+        <table class="table table-bordered table-striped crud-list table-condensed">
+            <thead>
+                <tr>
+                    <th>Fichier</th>
+                    <th class="crud-actions">Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in document.files %}
+                    <tr>
+                        <td>
+                            {{ file.name }}
+                        </td>
+                        <td class="crud-actions">
+                            <a class="btn btn-mini btn-danger ask-delete"
+                               href="{{ path('soloist_document_admin_file_delete',
+                               {'id': file.id }) }}">
+                                <i class="icon-trash icon-white"></i> supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <div class="span4">
+        <form class="well" action="{{ path('soloist_document_admin_file_create', {'id': document.id}) }}"
+              method="post" {{ form_enctype(form) }}>
+            <fieldset>
+                <legend>Ajouter un fichier</legend>
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-success">Envoyer</button>
+            </fieldset>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block aside %}
+<dl>
+    <dt><span class="label">Nombre de fichiers</span></dt>
+    <dd>{{ document.files|length }}</dd>
+</dl>
+{% endblock %}
