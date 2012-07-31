@@ -5,10 +5,14 @@ namespace Soloist\Bundle\DocumentBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     Symfony\Component\HttpFoundation\StreamedResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Soloist\Bundle\DocumentBundle\Entity\Category,
     Soloist\Bundle\DocumentBundle\Entity\Document;
 
+/**
+ * Default controller to show documents
+ */
 class DefaultController extends Controller
 {
     /**
@@ -31,6 +35,7 @@ class DefaultController extends Controller
      * @param  Category $category
      * @return array
      * @Template()
+     * @ParamConverter("category", class="SoloistDocumentBundle:Category")
      */
     public function showCategoryAction(Category $category)
     {

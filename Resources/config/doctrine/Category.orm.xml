@@ -11,8 +11,9 @@
         <field name="name" type="string" column="name" length="255" />
         <field name="description" type="text" column="description" nullable="true" />
         <one-to-many field="documents" target-entity="Soloist\Bundle\DocumentBundle\Entity\Document" mapped-by="category" />
-        <field name="slug" type="string" column="slug" unique="true">
-            <gedmo:slug fields="name" />
+
+        <field name="slug" type="string" column="slug">
+            <gedmo:slug unique="true" style="default" updatable="false" separator="-" fields="name" />
         </field>
         <lifecycle-callbacks/>
     </entity>
