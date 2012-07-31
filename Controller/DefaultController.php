@@ -8,7 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Soloist\Bundle\DocumentBundle\Entity\Category,
-    Soloist\Bundle\DocumentBundle\Entity\Document;
+    Soloist\Bundle\DocumentBundle\Entity\Document,
+    Soloist\Bundle\DocumentBundle\Entity\File;
 
 /**
  * Default controller to show documents
@@ -47,12 +48,12 @@ class DefaultController extends Controller
 
     /**
      * Download a document
-     * @param  Document $document
+     * @param  File $document
      * @return Response
      */
-    public function downloadAction(Document $document)
+    public function downloadAction(File $baseFile)
     {
-        $path = $this->get('soloist.document.manager.document')->getPath($document);
+        $path = $this->get('soloist.document.manager.file')->getPath($baseFile);
 
         if (!is_file($path)) {
             throw new $this->createNotFoundException();
