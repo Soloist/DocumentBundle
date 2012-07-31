@@ -15,7 +15,7 @@
         <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="soloist_document_show_category" pattern="/soloist/document/category/{slug}">
+    <route id="soloist_document_show_category" pattern="/soloist/document/category/{slug}.html">
         <default key="_controller">SoloistDocumentBundle:Default:download</default>
         <requirement key="_method">GET</requirement>
         <requirement key="slug">[-a-zA-Z0-9]+</requirement>
