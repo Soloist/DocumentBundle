@@ -7,12 +7,18 @@
 
     <parameters>
         <parameter key="soloist.document.listener.menu.class">Soloist\Bundle\DocumentBundle\EventListener\DashboardListener</parameter>
+        <parameter key="soloist.document.manager.document.class">Soloist\Bundle\DocumentBundle\Manager</parameter>
     </parameters>
 
     <services>
         <service id="soloist.document.listener.menu" class="%soloist.document.listener.menu.class%">
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.new"  method="onConfigureNewMenu" />
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.top"  method="onConfigureTopMenu" />
+        </service>
+        <service id="soloist.document.manager.document" class="%soloist.document.manager.document.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
     </services>
 
