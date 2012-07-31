@@ -2,7 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+    xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
     <entity name="Soloist\Bundle\DocumentBundle\Entity\Category">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
@@ -10,6 +11,9 @@
         <field name="name" type="string" column="name" length="255" />
         <field name="description" type="text" column="description" nullable="true" />
         <one-to-many field="documents" target-entity="Soloist\Bundle\DocumentBundle\Entity\Document" mapped-by="category" />
+        <field name="slug" type="string" unique="true">
+            <gedmo:slug fields="name" />
+        </field>
         <lifecycle-callbacks/>
     </entity>
 </doctrine-mapping>

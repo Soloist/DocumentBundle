@@ -31,6 +31,11 @@ class Category implements CrudableInterface
      */
     protected $documents;
 
+    /**
+     * @var string $slug
+     */
+    protected $slug;
+
 
     /**
      * Get id
@@ -51,6 +56,29 @@ class Category implements CrudableInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
         return $this;
     }
