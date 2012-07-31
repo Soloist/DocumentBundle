@@ -3,23 +3,40 @@
 namespace Soloist\Bundle\DocumentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    Symfony\Component\HttpFoundation\StreamedResponse;
+
+use Soloist\Bundle\DocumentBundle\Entity\Category,
+    Soloist\Bundle\DocumentBundle\Entity\Document;
 
 class DefaultController extends Controller
 {
     /**
-     * List documents
+     * List categories
      * @return array
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine();
-        $categories = $em->getRepository('SoloistDocumentBundle:Category');
+        $categories = $em->getRepository('SoloistDocumentBundle:Category')->findAll();
 
         return array(
             'categories' => $categories
         );
+    }
+
+    /**
+     * List documents
+     * @param  Category $category
+     * @return array
+     * @Template()
+     */
+    public function showCategoryAction(Category $category)
+    {
+        $documents = $category->getDocuments();
+
+        return array('documents' => $documents);
     }
 
 
@@ -30,9 +47,7 @@ class DefaultController extends Controller
      */
     public function downloadAction(Document $document)
     {
-        $path = $this->container->getParameter('kernel.root_dir');
-        $path .= '/' . $this->container->getParameter('soloist_document_upload_dir');
-        $path .= '/' . $document->getFilename();
+        $path = $this->get('soloist.document.manager.document')->getPath($document);
 
         if (!is_file($path)) {
             throw new $this->createNotFoundException();
@@ -40,10 +55,16 @@ class DefaultController extends Controller
 
         $response = new StreamedResponse();
         $response->headers->set('Content-Type', $file->getMimeType());
+        $splFile = SplFileObject($path);
 
-        $response->setCallback(function () use ($path) {
-            echo readfile($path);
-            flush();
+        // 10 ko by iteration
+        $sqlFile->setMaxLineLen(10000);
+
+        $response->setCallback(function () use ($file) {
+            foreach ($file as $line) {
+                echo $line;
+                flush();
+            }
         });
 
         return $response;
