@@ -1,13 +1,16 @@
 {% extends 'SoloistDocumentBundle:Default:base.html.twig' %}
+
 {% block soloist_document_content %}
-<h1>Liste des documents</h1>
+    <h1>Documents pour la catégorie {{ category }}</h1>
 
-<ul>
-    {% for document in category.documents %}
-        <li>{{ document.title }} : <a href="{{ path('soloist_document_download', {'id': document.id}) }}">télécharger</a></li>
-    {% else %}
-        <li>Aucun document dans cette catégorie</li>
-    {% endfor %}
-</ul>
-
+    <ul>
+        {% for document in category.documents %}
+            <li>
+                {{ document.title }} :
+                <a href="{{ path('soloist_document_show_document', { 'slug': document.slug }) }}">Voir le document</a>
+            </li>
+        {% else %}
+            <li>Aucun document dans cette catégorie</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

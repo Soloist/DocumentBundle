@@ -1,0 +1,16 @@
+{% extends 'SoloistDocumentBundle:Default:base.html.twig' %}
+
+{% block soloist_document_content %}
+    <h1>{{ document.title }}</h1>
+
+    <ul>
+        {% for file in document.files %}
+            <li>
+                {{ file.name }} :
+                <a href="{{ path('soloist_document_download', { 'id': file.id }) }}">Télécharger</a>
+            </li>
+        {% else %}
+            <li>Pas de fichier pour ce document</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
