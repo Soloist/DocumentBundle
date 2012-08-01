@@ -15,11 +15,7 @@
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.new"  method="onConfigureNewMenu" />
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.top"  method="onConfigureTopMenu" />
         </service>
-        <service id="soloist.document.manager.file" class="%soloist.document.manager.file.class%">
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-        </service>
+        <service id="soloist.document.manager.file" class="%soloist.document.manager.file.class%" />
     </services>
 
 </container>

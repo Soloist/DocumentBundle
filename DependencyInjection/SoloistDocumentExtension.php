@@ -22,10 +22,21 @@ class SoloistDocumentExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        // Add configuration to container
-        $container->setParameter('soloist_document_upload_dir', $config['upload_dir']);
+        if (is_null($config['upload_dir'])) {
+            $config['upload_dir'] = $container->getParameter('kernel.root_dir') . '/../files/soloist_document';
+        }
+        if (!is_dir($config['upload_dir'])) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The "%s" directory does not exists. Please create it with sufficent permissions.',
+                    $config['upload_dir']
+                )
+            );
+        }
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->getDefinition('soloist.document.manager.file')->addArgument(realpath($config['upload_dir']));
     }
 }
