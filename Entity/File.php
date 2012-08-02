@@ -28,6 +28,17 @@ class File
     protected $document;
 
     /**
+     * Meta data
+     * @var string
+     */
+    protected $metaData;
+
+    /**
+     * Creation date
+     * @var \DateTime
+     */
+    protected $createdAt;
+    /**
      * Get id
      * @return integer
      */
@@ -56,6 +67,45 @@ class File
 
         return $this;
     }
+
+    /**
+     * Get metadata
+     * @return string
+     */
+    public function getMetaData()
+    {
+        return $this->metaData;
+    }
+
+    /**
+     * Set metadata
+     * @param string $metadata
+     * @return  File
+     */
+    public function setMetaData($filename)
+    {
+        $this->filename = $metaData;
+
+        return $this;
+    }
+
+    /**
+     * Set created date
+     * @param \DateTime $date
+     */
+    public function setCreatedAt(\DateTime $date)
+    {
+        $this->createdAt = $date;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
 
     /**
      * Get name
