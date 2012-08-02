@@ -3,7 +3,8 @@
 namespace Soloist\Bundle\DocumentBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\Form\AbstractType;
+    Symfony\Component\Form\AbstractType,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Document type
