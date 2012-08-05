@@ -2,28 +2,48 @@
 
 namespace Soloist\Bundle\DocumentBundle\Manager;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Soloist\Bundle\DocumentBundle\Entity\File as FileBase;
+use Soloist\Bundle\DocumentBundle\Entity\File as FileEntity;
 
 /**
  * File manager
  */
-class File extends ContainerAware
+class File
 {
-    public function getPath(FileBase $file)
-    {
-        $path = $this->container->getParameter('kernel.root_dir');
-        $path .= '/..' . $this->container->getParameter('soloist_document_upload_dir');
-        $path .= '/' . $file->getFilename();
+    /**
+     * The base path from the bundle config
+     *
+     * @var string
+     */
+    protected $basePath;
 
-        return $path;
+    /**
+     * Constructor, take the upload basePath as parameter
+     *
+     * @param $basePath
+     */
+    public function __construct($basePath)
+    {
+        $this->basePath = $basePath;
     }
 
-    public function getPartialPath()
+    /**
+     * Returns the computed path for a file
+     *
+     * @param  FileEntity $file
+     * @return string
+     */
+    public function getPath(FileEntity $file)
     {
-        $path = $this->container->getParameter('kernel.root_dir');
-        $path .= '/..' . $this->container->getParameter('soloist_document_upload_dir');
+        return $this->basePath . '/' . $file->getFilename();
+    }
 
-        return $path;
+    /**
+     * Returns the basepath
+     *
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
     }
 }

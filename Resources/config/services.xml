@@ -1,24 +1,23 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="soloist.document.listener.menu.class">Soloist\Bundle\DocumentBundle\EventListener\DashboardListener</parameter>
         <parameter key="soloist.document.manager.file.class">Soloist\Bundle\DocumentBundle\Manager\File</parameter>
+        <parameter key="soloist.document.listener.core.class">Soloist\Bundle\DocumentBundle\EventListener\SoloistCoreListener</parameter>
     </parameters>
-
     <services>
         <service id="soloist.document.listener.menu" class="%soloist.document.listener.menu.class%">
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.new"  method="onConfigureNewMenu" />
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.top"  method="onConfigureTopMenu" />
         </service>
-        <service id="soloist.document.manager.file" class="%soloist.document.manager.file.class%">
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
+        <service id="soloist.document.manager.file" class="%soloist.document.manager.file.class%" />
+        <service id="soloist.document.listener.core" class="%soloist.document.listener.core.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="soloist.core.request_action"  method="onRequestAction" />
         </service>
     </services>
 

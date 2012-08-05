@@ -4,17 +4,16 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
     xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
-    <entity name="Soloist\Bundle\DocumentBundle\Entity\Category">
+    <entity name="Soloist\Bundle\DocumentBundle\Entity\Category" table="soloist_document_category">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
         </id>
         <field name="name" type="string" column="name" length="255" />
         <field name="description" type="text" column="description" nullable="true" />
-        <one-to-many field="documents" target-entity="Soloist\Bundle\DocumentBundle\Entity\Document" mapped-by="category" />
-
-        <field name="slug" type="string" column="slug">
+        <field name="slug" type="string" column="slug" length="255">
             <gedmo:slug unique="true" style="default" updatable="false" separator="-" fields="name" />
         </field>
+        <one-to-many field="documents" target-entity="Soloist\Bundle\DocumentBundle\Entity\Document" mapped-by="category" />
         <lifecycle-callbacks/>
     </entity>
 </doctrine-mapping>

@@ -1,11 +1,14 @@
 {% extends 'SoloistDocumentBundle:Default:base.html.twig' %}
+
 {% block soloist_document_content %}
-<h1>Liste des catégories de documents</h1>
-<ul>
-    {% for category in categories %}
-    <li>
-        <a href="{{ path('soloist_document_show_category', {'slug': category.slug}) }}">{{ category.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
+    <h1>Liste des catégories de documents</h1>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <a href="{{ path('soloist_document_show_category', {'slug': category.slug}) }}">
+                {{ category.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

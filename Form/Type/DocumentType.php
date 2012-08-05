@@ -3,7 +3,8 @@
 namespace Soloist\Bundle\DocumentBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\Form\AbstractType;
+    Symfony\Component\Form\AbstractType,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Document type
@@ -19,11 +20,13 @@ class DocumentType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array(
             'data_class' => 'Soloist\\Bundle\\DocumentBundle\\Entity\\Document',
-        );
+        ));
     }
 
     public function getName()

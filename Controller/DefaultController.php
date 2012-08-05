@@ -2,10 +2,10 @@
 
 namespace Soloist\Bundle\DocumentBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use Soloist\Bundle\DocumentBundle\Entity\Category,
     Soloist\Bundle\DocumentBundle\Entity\Document,
@@ -18,53 +18,73 @@ class DefaultController extends Controller
 {
     /**
      * List categories
-     * @return array
+     *
      * @Template()
+     *
+     * @return array
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine();
-        $categories = $em->getRepository('SoloistDocumentBundle:Category')->findAll();
+        $categories = $this->getDoctrine()->getRepository('SoloistDocumentBundle:Category')->findAll();
 
-        return array(
-            'categories' => $categories
-        );
+        return array('categories' => $categories);
     }
 
     /**
      * List documents
-     * @param  Category $category
-     * @return array
+     *
      * @Template()
-     * @ParamConverter("category", class="SoloistDocumentBundle:Category")
+     *
+     * @param  Category $category
+     *
+     * @return array
      */
     public function showCategoryAction(Category $category)
     {
-        $documents = $category->getDocuments();
+        return array('category' => $category);
+    }
 
-        return array('documents' => $documents);
+    /**
+     * List files
+     *
+     * @Template()
+     *
+     * @param  Document $category
+     *
+     * @return array
+     */
+    public function showDocumentAction(Document $document)
+    {
+        return array('document' => $document);
     }
 
 
     /**
      * Download a document
-     * @param  File $document
-     * @return Response
+     *
+     * @param   Document $document
+     * @throws  \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return StreamedResponse
      */
-    public function downloadAction(File $baseFile)
+    public function downloadAction(File $file)
     {
-        $path = $this->get('soloist.document.manager.file')->getPath($baseFile);
+        $path = $this->get('soloist.document.manager.file')->getPath($file);
 
         if (!is_file($path)) {
-            throw new $this->createNotFoundException();
+            throw $this->createNotFoundException('Document file not found : '.$path);
         }
 
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+
         $response = new StreamedResponse();
-        $response->headers->set('Content-Type', $file->getMimeType());
-        $splFile = SplFileObject($path);
+        $response->headers->set('Content-Type', $finfo->file($path));
+        $response->headers->set('Content-Length', filesize($path));
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . basename($path));
+        $file = new \SplFileObject($path);
 
         // 10 ko by iteration
-        $sqlFile->setMaxLineLen(10000);
+        $file->setMaxLineLen(10000);
 
         $response->setCallback(function () use ($file) {
             foreach ($file as $line) {
@@ -74,6 +94,5 @@ class DefaultController extends Controller
         });
 
         return $response;
-
     }
 }

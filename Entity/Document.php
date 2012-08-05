@@ -21,25 +21,30 @@ class Document implements CrudableInterface
     protected $title;
 
     /**
-     * @var text $description
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * @var string $description
      */
     protected $description;
 
     /**
      * Creation date
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
      * Update date
-     * @var DateTime
+     * @var \DateTime
      */
     protected $updatedAt;
 
     /**
      * Category of the document
-     * @var Soloist\Bundle\DocumentBundle\Entity\Category
+     * @var Category
      */
     protected $category;
 
@@ -187,5 +192,21 @@ class Document implements CrudableInterface
         return array(
             'id' => $this->id
         );
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
