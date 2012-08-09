@@ -31,7 +31,7 @@ class File
      * Meta data
      * @var string
      */
-    protected $metaData;
+    protected $metadata;
 
     /**
      * Creation date
@@ -72,9 +72,9 @@ class File
      * Get metadata
      * @return string
      */
-    public function getMetaData()
+    public function getMetadata()
     {
-        return $this->metaData;
+        return $this->metadata;
     }
 
     /**
@@ -82,9 +82,9 @@ class File
      * @param string $metadata
      * @return  File
      */
-    public function setMetaData($filename)
+    public function setMetadata($metadata)
     {
-        $this->filename = $metaData;
+        $this->metadata = $metadata;
 
         return $this;
     }
