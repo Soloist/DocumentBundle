@@ -28,12 +28,15 @@ class File
     protected $document;
 
     /**
+<<<<<<< Updated upstream
      * Meta data
      * @var string
      */
     protected $metadata;
 
     /**
+=======
+>>>>>>> Stashed changes
      * Creation date
      * @var \DateTime
      */
@@ -64,27 +67,6 @@ class File
     public function setFilename($filename)
     {
         $this->filename = $filename;
-
-        return $this;
-    }
-
-    /**
-     * Get metadata
-     * @return string
-     */
-    public function getMetadata()
-    {
-        return $this->metadata;
-    }
-
-    /**
-     * Set metadata
-     * @param string $metadata
-     * @return  File
-     */
-    public function setMetadata($metadata)
-    {
-        $this->metadata = $metadata;
 
         return $this;
     }
