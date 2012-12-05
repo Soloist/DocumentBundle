@@ -3,13 +3,12 @@
 namespace Soloist\Bundle\DocumentBundle\Controller;
 
 use FrequenceWeb\Bundle\DashboardBundle\Controller\ORMCrudController;
-
-use Soloist\Bundle\DocumentBundle\Form\Handler\FileHandler,
-    Soloist\Bundle\DocumentBundle\Entity\Document,
-    Soloist\Bundle\DocumentBundle\Form\Type\DocumentType,
-    Soloist\Bundle\DocumentBundle\Form\Type\FileType;
-
 use Soloist\Bundle\DocumentBundle\Entity\Category;
+use Soloist\Bundle\DocumentBundle\Entity\Document;
+use Soloist\Bundle\DocumentBundle\Entity\File;
+use Soloist\Bundle\DocumentBundle\Form\Handler\FileHandler;
+use Soloist\Bundle\DocumentBundle\Form\Type\DocumentType;
+use Soloist\Bundle\DocumentBundle\Form\Type\FileType;
 
 class AdminDocumentController extends ORMCrudController
 {
@@ -53,7 +52,11 @@ class AdminDocumentController extends ORMCrudController
         );
     }
 
-
+    /**
+     * @param  Category $category
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function listByCategoryAction(Category $category)
     {
         $documents = $category->getDocuments();
@@ -64,12 +67,17 @@ class AdminDocumentController extends ORMCrudController
         ));
     }
 
+    /**
+     * @param  Document                                   $document
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function manageFileAction(Document $document)
     {
         $handler = new FileHandler(
-            $this->getDoctrine()->getEntityManager(),
+            $this->getDoctrine()->getManager(),
             $this->get('form.factory'),
-            $this->get('soloist.document.manager.file')->getPartialPath(),
+            $this->get('soloist.document.manager.file')->getBasePath(),
             $document
         );
         $form = $handler->getForm();
@@ -80,12 +88,17 @@ class AdminDocumentController extends ORMCrudController
         ));
     }
 
+    /**
+     * @param  Document                                   $document
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function createFileAction(Document $document)
     {
         $handler = new FileHandler(
-            $this->getDoctrine()->getEntityManager(),
+            $this->getDoctrine()->getManager(),
             $this->get('form.factory'),
-            $this->get('soloist.document.manager.file')->getPartialPath(),
+            $this->get('soloist.document.manager.file')->getBasePath(),
             $document
         );
         $form = $handler->getForm();
@@ -102,16 +115,21 @@ class AdminDocumentController extends ORMCrudController
         ));
     }
 
+    /**
+     * @param File                                                $file
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteFileAction(File $file)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $filename = $file->getFilename();
         $document = $file->getDocument();
         $em->remove($file);
 
         if (!empty($filename)) {
-            $path = $this->getAbsoluteUploadDir() . $filename;
+            $path = $this->get('soloist.document.manager.file')->getPath($file);
 
             if (is_file($path)) {
                 unlink($path);

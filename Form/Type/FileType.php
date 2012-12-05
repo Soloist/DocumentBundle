@@ -2,14 +2,18 @@
 
 namespace Soloist\Bundle\DocumentBundle\Form\Type;
 
-use Symfony\Component\Form\FormBuilderInterface,
-    Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * File type
  */
 class FileType extends AbstractType
 {
+    /**
+     * @{inheritDoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -18,13 +22,21 @@ class FileType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions()
+    /**
+     * @{inheritDoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-            'data_class' => 'Soloist\\Bundle\\DocumentBundle\\Entity\\File',
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Soloist\\Bundle\\DocumentBundle\\Entity\\File',
+            )
         );
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function getName()
     {
         return 'soloist_document_file';
