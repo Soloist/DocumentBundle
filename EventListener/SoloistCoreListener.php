@@ -2,21 +2,27 @@
 
 namespace Soloist\Bundle\DocumentBundle\EventListener;
 
-use Soloist\Bundle\CoreBundle\Event\RequestAction;
 use Doctrine\ORM\EntityManager;
+use Soloist\Bundle\CoreBundle\Event\RequestAction;
 
 class SoloistCoreListener
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
+    /**
+     * @param RequestAction $event
+     */
     public function onRequestAction(RequestAction $event)
     {
         foreach ($this->em->getRepository('SoloistDocumentBundle:Category')->findAll() as $category) {
